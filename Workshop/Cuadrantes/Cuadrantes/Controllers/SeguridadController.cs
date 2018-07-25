@@ -19,10 +19,16 @@ namespace Cuadrantes.Controllers
             return "Bienvenido !!!";
         }
         [HttpPost]
-        public string Registro(string cedula, DateTime fechaExpedicion,
+        public string Registro(string usuario, string clave, string cedula, DateTime fechaExpedicion,
             string telefono, string correo)
         {
-            return string.Empty;
+            if (usuario == null && clave == null && cedula == null 
+                && fechaExpedicion == null && telefono == null && correo == null) 
+            {
+                return "Todos los campos son obligatorios";
+            }
+
+            return "Registro usuario satisfactorio";
         }
     }
 }
