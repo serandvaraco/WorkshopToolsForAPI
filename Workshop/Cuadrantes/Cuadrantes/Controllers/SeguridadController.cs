@@ -12,7 +12,11 @@ namespace Cuadrantes.Controllers
         [HttpPost]
         public string IniciarSesion(string usuario, string clave)
         {
-            return string.Empty;
+            if (usuario == null && clave == null)
+            {
+                return "Datos invalidos";
+            }
+            return "Bienvenido";
         }
         [HttpPost]
         public string Registro(string cedula, DateTime fechaExpedicion,
