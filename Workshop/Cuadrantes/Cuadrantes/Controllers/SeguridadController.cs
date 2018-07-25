@@ -16,7 +16,7 @@ namespace Cuadrantes.Controllers
             {
                 return "Datos invalidos, ingrese nuevamente los datos";
             }
-            return "Bienvenido , Yo edite esto jajjaja!!!";
+            return "Bienvenido , Yo edite esto ja jajjaja!!!";
         }
         [HttpPost]
         public string Registro(string cedula, DateTime fechaExpedicion,
