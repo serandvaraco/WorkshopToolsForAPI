@@ -26,7 +26,7 @@ namespace Cuadrantes
         {
             services.AddDbContext<Model.CuadranteDataContext>(o =>
             {
-                o.UseSqlServer(@"Data Source=(Localdb)\.; Initial Catalog=CuandranteDB; Integrated Security=true");
+                o.UseSqlServer(@"Data Source=(Localdb)\.;Initial Catalog=CuandranteDB; Integrated Security=true");
             });
 
             services.AddMvc();
