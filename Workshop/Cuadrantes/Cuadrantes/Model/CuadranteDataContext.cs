@@ -6,7 +6,7 @@ namespace Cuadrantes.Model
 {
     public class CuadranteDataContext : DbContext
     {
-
+         
         public CuadranteDataContext(DbContextOptions<CuadranteDataContext> options)
             : base(options)
         { }
