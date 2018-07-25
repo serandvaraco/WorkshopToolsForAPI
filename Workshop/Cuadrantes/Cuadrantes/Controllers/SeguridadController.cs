@@ -22,7 +22,7 @@ namespace Cuadrantes.Controllers
         public string Registro(string cedula, DateTime fechaExpedicion,
             string telefono, string correo)
         {
-            return "Usuario registrado";
+            return "Usuario registrado correcto";
         }
     }
 }
