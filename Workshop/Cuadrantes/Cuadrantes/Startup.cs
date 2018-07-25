@@ -16,6 +16,8 @@ namespace Cuadrantes
     {
         public Startup(IConfiguration configuration)
         {
+
+
             Configuration = configuration;
         }
 
@@ -26,11 +28,15 @@ namespace Cuadrantes
         {
             services.AddDbContext<Model.CuadranteDataContext>(o =>
             {
-                o.UseSqlServer(@"Data Source=(Localdb)\.; Initial Catalog=CuandranteDB; Integrated Security=true");
+                o.UseSqlServer(@"Data Source=(Localdb)\.;Initial Catalog=CuandranteDB; Integrated Security=true");
             });
 
             services.AddMvc();
+            //adejo
 
+            // 
+
+            //
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
