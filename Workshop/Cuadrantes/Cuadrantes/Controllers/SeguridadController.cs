@@ -14,7 +14,7 @@ namespace Cuadrantes.Controllers
         {
             if (usuario == null && clave == null)
             {
-                return "Datos invalidos";
+                return "Datos invalidos, ingrese nuevamente los datos";
             }
             return "Bienvenido !!!";
         }
