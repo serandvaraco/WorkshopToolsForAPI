@@ -16,6 +16,8 @@ namespace Cuadrantes
     {
         public Startup(IConfiguration configuration)
         {
+
+
             Configuration = configuration;
         }
 

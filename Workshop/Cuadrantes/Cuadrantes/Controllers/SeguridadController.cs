@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cuadrantes.Model;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cuadrantes.Controllers
@@ -18,6 +19,7 @@ namespace Cuadrantes.Controllers
         [HttpPost]
         public string IniciarSesion(string usuario, string clave)
         {
+            
             return string.Empty;
         }
         [HttpPost]
