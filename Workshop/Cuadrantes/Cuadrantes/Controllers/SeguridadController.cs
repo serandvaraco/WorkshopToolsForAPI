@@ -20,13 +20,23 @@ namespace Cuadrantes.Controllers
         public string IniciarSesion(string usuario, string clave)
         {
 
-            if (usuario == null && clave == null)
+            InformacionUsuario User = new InformacionUsuario();
+            if (User.Nombre == usuario && User.Cedula == clave)
             {
-                return "Datos invalidos, ingrese nuevamente los datos";
-            }
-            return "Bienvenido , Yo edite esto ja jajjaja!!!";
+                return "Bienvenido !!!";
 
-        }
+            }
+            else if (usuario == null && clave == null)
+            {
+
+                return "Datos invalidos, ingrese nuevamente los datos";
+
+            }
+            else
+            {
+
+                return "Por favor Usted debe registrarse para iniciar sesión";
+            }
         [HttpPost]
         public string Registro(string cedula, DateTime fechaExpedicion,
             string telefono, string correo)
