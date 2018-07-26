@@ -8,6 +8,7 @@ namespace Cuadrantes.Security
     public class SecurityToken
 
     {
+
         public Guid id { get; set; }
 
         public DateTime Expiration { get; set; }

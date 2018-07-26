@@ -27,17 +27,16 @@ namespace Cuadrantes.Controllers
         /// <param name="clave"></param>
         /// <returns></returns>
         [HttpPost]
-        public string IniciarSesion(string usuario, string clave)
+        public string IniciarSesion(string usuario, string Password)
         {
 
-            InformacionUsuario User1 = new InformacionUsuario();
-            if (User1.Nombre == usuario && User1.Cedula == clave)
-            {
-                GetToken(usuario, clave);
-                return "Bienvenido !!!";
+            
 
+            if (db.InformacionUsuario.Any(x=> x.Nombre == usuario && x.Clave ==Password))
+            {
+                return GetToken(usuario, Password);
             }
-            else if (usuario == null && clave == null)
+            else if (usuario == null && Password == null)
             {
 
                 return "Datos invalidos, ingrese nuevamente los datos";
@@ -47,15 +46,43 @@ namespace Cuadrantes.Controllers
             {
 
                 return "Por favor Usted debe registrarse para iniciar sesión";
-            }
+            }        
+        }
+
+        public SecurityToken ValidateToken()
+        {
+            var requestToken = HttpContext.Request.Headers["__TOKEN_SECURITY__"];
+
+            if (string.IsNullOrEmpty(requestToken))
+                throw new Exception("Token Invalido");
+
+            //Obtiene los bytes desde el base64 generado en el token 
+            byte[] TokenBytes = Convert.FromBase64String(requestToken);
+            //obtengo la codificación UTF8 del token
+            string TokenUTF8Hash = Encoding.UTF8.GetString(TokenBytes);
+            //se obtiene el Json de la codificación 
+            string tokenJSON = new Common().Decrypt(TokenUTF8Hash, key);
+
+            //se obtiene el TOKEN 
+            SecurityToken SecurityToken =
+                JsonConvert.DeserializeObject<SecurityToken>(tokenJSON);
+
+            if (SecurityToken == null)
+                throw new Exception("Token Invalido");
+
+            if (SecurityToken.Expiration <= DateTime.Now)
+                throw new Exception("Token Expirado");
+
+            //se obtiene el token con la información genrada
+            return SecurityToken;
         }
 
         const string key = "BeX30vkH8iy5ZMEzGG0qmw==";
-        private string GetToken(string username, string cedula)
+        private string GetToken(string username, string password)
         {
             var common = new Common();
-            var cedulaSHA256 = common.GenerateSHA256(cedula);
-            var user = db.InformacionUsuario.FirstOrDefault(x => x.Nombre == username && x.Cedula == cedulaSHA256);
+            var passwordSHA256 = common.GenerateSHA256(password);
+            var user = db.InformacionUsuario.FirstOrDefault(x => x.Nombre == username && x.Clave == passwordSHA256);
             if (user == null)
                 return "Credenciales no validas";
             //Obtener los nombre de los roles autorizados por el usuario
@@ -90,11 +117,15 @@ namespace Cuadrantes.Controllers
         [HttpPost("Registro")]
         public string Registro(InformacionUsuario informacionUsuario)
         {
+            var common = new Common();
+            var claveSHA256 = common.GenerateSHA256(informacionUsuario.Clave);
+            informacionUsuario.Clave = claveSHA256;
+
             if (ModelState.IsValid)
             {
                 db.InformacionUsuario.Add(informacionUsuario);
                 db.SaveChanges();
-                return "Usuario registrado correcto";
+                return "Usuario registrado correctamente";
             }
             return "Datos incorrectos, intentelo nuevamente";
         }
