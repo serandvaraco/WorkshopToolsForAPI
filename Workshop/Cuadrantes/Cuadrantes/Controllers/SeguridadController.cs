@@ -10,6 +10,14 @@ namespace Cuadrantes.Controllers
     [Route("api/[controller]")]
     public class SeguridadController : Controller
     {
+
+        CuadranteDataContext db;
+
+        public SeguridadController(CuadranteDataContext cuadranteDataContext)
+        {
+            db = cuadranteDataContext;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -27,11 +35,16 @@ namespace Cuadrantes.Controllers
             return "Bienvenido , Yo edite esto ja jajjaja!!!";
 
         }
-        [HttpPost]
-        public string Registro(string cedula, DateTime fechaExpedicion,
-            string telefono, string correo)
+        [HttpPost("Registro")]
+        public string Registro(InformacionUsuario informacionUsuario)
         {
-            return "Usuario registrado correcto";
+            if (ModelState.IsValid)
+            {
+                db.InformacionUsuario.Add(informacionUsuario);
+                db.SaveChanges();
+                return "Usuario registrado correcto";
+            }
+            return "Datos incorrectos, intentelo nuevamente";
         }
     }
 }

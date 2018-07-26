@@ -11,9 +11,10 @@ using System;
 namespace Cuadrantes.Migrations
 {
     [DbContext(typeof(CuadranteDataContext))]
-    partial class CuadranteDataContextModelSnapshot : ModelSnapshot
+    [Migration("20180726124924_CampoTablaInformacionUsuario")]
+    partial class CampoTablaInformacionUsuario
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace Cuadrantes.Model
 {
@@ -26,13 +28,49 @@ namespace Cuadrantes.Model
         public virtual UbicacionCuadrante Cuadrante { get; set; }
     }
 
+    [DataContract]
     public class InformacionUsuario
     {
+        [DataMember]
+        [Display(Name = "Id")]
         public int Id { get; set; }
+
+        [DataMember]
+        [Display(Name = "Contraseña")]
+        [Required(ErrorMessage = "El campo es requerido")]
+        [DataType(DataType.Password)]
+        public string Clave { get; set; }
+
+        [DataMember]
+        [Display(Name = "Fecha de expedición")]
+        [Required(ErrorMessage = "El campo es requerido")]
+        [DataType(DataType.DateTime)]
         public DateTime FechaExpedicion { get; set; }
+
+        [DataMember]
+        [Display(Name = "Usuario")]
+        [Required(ErrorMessage = "El campo es requerido")]
+        [DataType(DataType.Text)]
+        [StringLength(maximumLength: 20)]
         public string Nombre { get; set; }
+
+        [DataMember]
+        [Display(Name = "Email")]
+        [Required(ErrorMessage = "El campo es requerido")]
+        [DataType(DataType.EmailAddress)]
         public string Correo { get; set; }
+
+        [DataMember]
+        [Display(Name = "Teléfono")]
+        [Required(ErrorMessage = "El campo es requerido")]
+        [DataType(DataType.PhoneNumber)]
         public string Telefono { get; set; }
+
+        [DataMember]
+        [Display(Name = "Fecha de expedición")]
+        [Required(ErrorMessage = "El campo es requerido")]
+        [DataType(DataType.Text)]
+        [StringLength(maximumLength:11)]
         public string Cedula { get; set; }
 
     }

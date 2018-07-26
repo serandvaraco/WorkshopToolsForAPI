@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NJsonSchema;
+using NSwag.AspNetCore;
+using System.Reflection;
 
 namespace Cuadrantes
 {
@@ -32,11 +35,6 @@ namespace Cuadrantes
             });
 
             services.AddMvc();
-            //adejo
-
-            // 
-
-            //
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +44,12 @@ namespace Cuadrantes
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, settings =>
+            {
+                settings.GeneratorSettings.DefaultPropertyNameHandling =
+                    PropertyNameHandling.CamelCase;
+            });
 
             app.UseMvc();
         }
