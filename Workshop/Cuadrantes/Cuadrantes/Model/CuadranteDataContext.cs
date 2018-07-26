@@ -37,8 +37,9 @@ namespace Cuadrantes.Model
 
         [DataMember]
         [Display(Name = "Contraseña")]
-        [Required(ErrorMessage = "El campo es requerido")]
+        [Required(ErrorMessage = "El campo es requerido")]        
         [DataType(DataType.Password)]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$")]
         public string Clave { get; set; }
 
         [DataMember]
