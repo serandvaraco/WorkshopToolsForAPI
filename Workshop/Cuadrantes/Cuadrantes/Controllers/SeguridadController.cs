@@ -117,11 +117,15 @@ namespace Cuadrantes.Controllers
         [HttpPost("Registro")]
         public string Registro(InformacionUsuario informacionUsuario)
         {
+            var common = new Common();
+            var claveSHA256 = common.GenerateSHA256(informacionUsuario.Clave);
+            informacionUsuario.Clave = claveSHA256;
+
             if (ModelState.IsValid)
             {
                 db.InformacionUsuario.Add(informacionUsuario);
                 db.SaveChanges();
-                return "Usuario registrado correcto";
+                return "Usuario registrado correctamente";
             }
             return "Datos incorrectos, intentelo nuevamente";
         }
