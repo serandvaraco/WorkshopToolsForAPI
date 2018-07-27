@@ -46,6 +46,12 @@ namespace Cuadrantes.Security
             return Convert.ToBase64String(dataEncrypted);
         }
 
+        public string Encrypt(string message)
+        {
+            Byte[] data = Encoding.UTF8.GetBytes(message);           
+            return Convert.ToBase64String(data);
+        }
+
 
         public string Decrypt(string message, string key)
         {
