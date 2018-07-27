@@ -8,7 +8,7 @@ namespace Cuadrantes.Model
 {
     public class CuadranteDataContext : DbContext
     {
-         
+
         public CuadranteDataContext(DbContextOptions<CuadranteDataContext> options)
             : base(options)
         { }
@@ -37,41 +37,42 @@ namespace Cuadrantes.Model
 
         [DataMember]
         [Display(Name = "Contraseña")]
-        [Required(ErrorMessage = "El campo es requerido")]        
+        [Required(ErrorMessage = "El campo es requerido")]
         [DataType(DataType.Password)]
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$",
+            ErrorMessage = "La contraseña debe tener una longitud de 8 máximo 15 carácteres, debe cumplir con: 1 Mayuscula, 1 Minuscula, 1 Carácter especial, 1 Número ")]
         public string Clave { get; set; }
 
         [DataMember]
         [Display(Name = "Fecha de expedición")]
         [Required(ErrorMessage = "El campo es requerido")]
-        [DataType(DataType.DateTime)]
+        [DataType(DataType.DateTime, ErrorMessage ="No es una fecha valida")]
         public DateTime FechaExpedicion { get; set; }
 
         [DataMember]
         [Display(Name = "Usuario")]
         [Required(ErrorMessage = "El campo es requerido")]
         [DataType(DataType.Text)]
-        [StringLength(maximumLength: 20)]
+        [StringLength(maximumLength: 20, ErrorMessage = "La longitud máxima es de 20 carácteres")]
         public string Nombre { get; set; }
 
         [DataMember]
         [Display(Name = "Email")]
         [Required(ErrorMessage = "El campo es requerido")]
-        [DataType(DataType.EmailAddress)]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Debe ser una cuenta de correo valida")]
         public string Correo { get; set; }
 
         [DataMember]
         [Display(Name = "Teléfono")]
         [Required(ErrorMessage = "El campo es requerido")]
-        [DataType(DataType.PhoneNumber)]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "No es un número valido")]
         public string Telefono { get; set; }
 
         [DataMember]
         [Display(Name = "Fecha de expedición")]
         [Required(ErrorMessage = "El campo es requerido")]
         [DataType(DataType.Text)]
-        [StringLength(maximumLength:11)]
+        [StringLength(maximumLength: 11, ErrorMessage = "El valor máximo permitido es de 11")]
         public string Cedula { get; set; }
 
     }

@@ -51,7 +51,7 @@ namespace Cuadrantes
                     PropertyNameHandling.CamelCase;
             });
 
-            app.UseMvc();
+            app.UseMvc( );
         }
     }
 }

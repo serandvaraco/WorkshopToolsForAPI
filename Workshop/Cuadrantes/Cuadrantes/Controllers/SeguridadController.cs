@@ -26,13 +26,13 @@ namespace Cuadrantes.Controllers
         /// <param name="usuario"></param>
         /// <param name="clave"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost("Iniciar")]
         public string IniciarSesion(string usuario, string Password)
         {
 
-            
 
-            if (db.InformacionUsuario.Any(x=> x.Nombre == usuario && x.Clave ==Password))
+
+            if (db.InformacionUsuario.Any(x => x.Nombre == usuario && x.Clave == Password))
             {
                 return GetToken(usuario, Password);
             }
@@ -46,10 +46,10 @@ namespace Cuadrantes.Controllers
             {
 
                 return "Por favor Usted debe registrarse para iniciar sesión";
-            }        
+            }
         }
 
-        public SecurityToken ValidateToken()
+        private SecurityToken ValidateToken()
         {
             var requestToken = HttpContext.Request.Headers["__TOKEN_SECURITY__"];
 
@@ -115,19 +115,27 @@ namespace Cuadrantes.Controllers
             return Convert.ToBase64String(tokenBytes);
         }
         [HttpPost("Registro")]
-        public string Registro(InformacionUsuario informacionUsuario)
+        public string Registro([Bind]InformacionUsuario informacionUsuario)
         {
-            var common = new Common();
-            var claveSHA256 = common.GenerateSHA256(informacionUsuario.Clave);
-            informacionUsuario.Clave = claveSHA256;
-
             if (ModelState.IsValid)
             {
+                var common = new Common();
+                var claveSHA256 = common.GenerateSHA256(informacionUsuario.Clave);
+                informacionUsuario.Clave = claveSHA256;
+
+
                 db.InformacionUsuario.Add(informacionUsuario);
                 db.SaveChanges();
                 return "Usuario registrado correctamente";
             }
-            return "Datos incorrectos, intentelo nuevamente";
+
+            StringBuilder sb = new StringBuilder();
+
+            ModelState.Values.Where(x => x.Errors.Any())
+                .SelectMany(x => x.Errors).ToList()
+                .ForEach(x => sb.AppendLine(x.ErrorMessage));
+
+            return $"Datos incorrectos, intentelo nuevamente \n {sb.ToString()}";
         }
     }
 }
