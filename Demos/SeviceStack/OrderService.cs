@@ -9,6 +9,7 @@ using ServiceStack.ServiceInterface;
 
 namespace ServiceStackProject
 {
+
     public class OrderService : ServiceStack.ServiceInterface.Service
     {
         public IOrderRepository OrderRepository { get; set; }
@@ -32,11 +33,17 @@ namespace ServiceStackProject
             var httpMethod = this.Request.HttpMethod;
 
             //Setting up the response.
-            this.Response.ContentType = ContentType.Json;
-            this.Response.AddHeader("Location", "http://<servername>/orders");
-            return new HttpResult{StatusCode = HttpStatusCode.OK};
+            this.Response.ContentType = ContentType.Csv;
+            this.Response.AddHeader("MICABECERA", "XXXYYYZZZ");
+            return new HttpResult { StatusCode = HttpStatusCode.OK, Response = new { Id = 12 } };
 
         }
+
+        public object Get(GetProductsRequest request)
+        {
+            return new HttpResult { StatusCode = HttpStatusCode.OK };
+        }
+
     }
 
     [Route("/orders", "GET")]
@@ -46,13 +53,22 @@ namespace ServiceStackProject
         public int Id { get; set; }
     }
 
+
+    [Route("/products", "GET")]
+    public class GetProductsRequest
+    {
+        public int Id { get; set; }
+    }
+
+
+
     public interface IOrderRepository
     {
-        
+
     }
     public class OrderRepository : IOrderRepository
     {
-        
+
     }
 
     public interface IProductRepository
