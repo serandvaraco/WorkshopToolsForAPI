@@ -117,6 +117,12 @@ namespace Cuadrantes.Controllers
         [HttpPost("Registro")]
         public string Registro([Bind]InformacionUsuario informacionUsuario)
         {
+            if (db.InformacionUsuario.Any(x => x.Correo == informacionUsuario.Correo))
+                return "Ya existe un usuario registrado con ese correo";
+
+            if (db.InformacionUsuario.Any(x => x.Cedula == informacionUsuario.Cedula))
+                return "Ya existe un usuario registrado con ese numero de cedula";
+
             if (ModelState.IsValid)
             {
                 var common = new Common();
